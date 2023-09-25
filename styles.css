@@ -1,0 +1,55 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    text-align: left;
+}
+
+h1 {
+    color: #333;
+}
+
+.rows {
+    display: flex;
+    flex-direction: column; /* Arrange rows vertically */
+    align-items: center; /* Horizontally center rows */
+}
+
+.row {
+    display: flex;
+    align-items: center; /* Vertically center elements within each row */
+    margin: 10px 0; /* Add vertical spacing between rows */
+}
+
+.flip-flop-button {
+    font-size: 24px;
+    margin-left: 10px; /* Add spacing between text field and button */
+    padding: 10px 20px;
+    border: 2px solid #333;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.editable-text-field {
+    font-size: 16px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#result {
+    font-size: 18px;
+    margin-top: 20px;
+}
+
+#value {
+    font-weight: bold;
+}
