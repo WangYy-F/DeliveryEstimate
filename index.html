@@ -11,7 +11,7 @@
         <label for="area-select">Select Geographical Area:</label>
         <select id="area-select">
             <option value="DFW">Dallas-Fort Worth</option>
-            <option value="NY">New York</option>
+            <option value="NY">New York City</option>
             <!-- Add options for other geographical areas as needed -->
         </select>
     </div>
@@ -20,36 +20,48 @@
         <div class="rows">
             <!-- Row 1 -->
             <div class="row">
-                <input id="text1" type="text" class="editable-text-field" value="Senior?" readonly>
-                <button id="button1" class="flip-flop-button">T</button>
+                <label for="slider1">age<65</label>
+                <input id="slider1" type="range" class="slider" min="0" max="1" value="0" step="1">
+                <label for="slider1">age>=65</label>
             </div>
             <!-- Row 2 -->
             <div class="row">
-                <input id="text2" type="text" class="editable-text-field" value="Female?" readonly>
-                <button id="button2" class="flip-flop-button">T</button>
+                <label for="slider2">Not Female</label>
+                <input id="slider2" type="range" class="slider" min="0" max="1" value="0" step="1">
+                <label for="slider2">Female</label>
             </div>
             <!-- Row 3 -->
             <div class="row">
-                <input id="text3" type="text" class="editable-text-field" value="College?" readonly>
-                <button id="button3" class="flip-flop-button">T</button>
+                <label for="slider3">No College Degree</label>
+                <input id="slider3" type="range" class="slider" min="0" max="1" value="0" step="1">
+                <label for="slider3">College Degree or Higher</label>
             </div>
             <!-- Row 4 -->
             <div class="row">
-                <input id="text4" type="text" class="editable-text-field" value="Household has car?" readonly>
-                <button id="button4" class="flip-flop-button">T</button>
+                <label for="slider4">No Car(s)</label>
+                <input id="slider4" type="range" class="slider" min="0" max="1" value="0" step="1">
+                <label for="slider4">Has Car(s)</label>
             </div>
             <!-- Row 5 -->
             <div class="row">
-                <input id="text5" type="text" class="editable-text-field" value="Household has child?" readonly>
-                <button id="button5" class="flip-flop-button">T</button>
+                <label for="slider5">No Child(ren)</label>
+                <input id="slider5" type="range" class="slider" min="0" max="1" value="0" step="1">
+                <label for="slider5">Has Child(ren)</label>
             </div>
             <!-- Row 6 -->
             <div class="row">
-                <input id="text6" type="text" class="editable-text-field" value="Household income high?" readonly>
-                <button id="button6" class="flip-flop-button">T</button>
+                <label for="slider6">Household Income: (<75,000 / 75,000-150,000 / >150,000)</label>
+                <input id="slider6" type="range" class="slider" min="0" max="2" value="0">
             </div>
         </div>
         <p id="result">Result: <span id="value">-</span></p>
+    </div>
+    <div class="dropdown">
+        <label for="column-select">Select Census Tract:</label>
+        <select id="column-select"></select>
+    </div>
+    <div class="column-result">
+        <p id="column-value">Total Delivery (Interval Estimate): <span id="column-result-value">-</span></p>
     </div>
     <script src="script.js"></script>
 </body>
