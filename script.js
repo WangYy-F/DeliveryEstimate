@@ -116,13 +116,31 @@ const areaSelect = document.getElementById('area-select');
 const columnSelect = document.getElementById('column-select');
 const columnResultValue = document.getElementById('column-result-value');
 const areaToCsvPath = {
+    ARR: 'data/arr_prediction.csv',
+    ASSR: 'data/assr_prediction.csv',
     DFW: 'data/dfw_prediction.csv',
+    HTWSL: 'data/htwsl_prediction.csv',
+    LALBA: 'data/lalba_prediction.csv',
+    MWWA: 'data/mwwa_prediction.csv',
     NY: 'data/ny_prediction.csv',
+    SANB: 'data/sanb_prediction.csv',
+    SDC: 'data/sdc_prediction.csv',
+    SFOH: 'data/sfoh_prediction.csv',
+    SRAA: 'data/sraa_prediction.csv',
     // Add mappings for other areas as needed
 };
 const areaToCTPath = {
+    ARR: 'data/arr_CTresult.csv',
+    ASSR: 'data/assr_CTresult.csv',
     DFW: 'data/dfw_CTresult.csv',
+    HTWSL: 'data/htwsl_CTresult.csv',
+    LALBA: 'data/lalba_CTresult.csv',
+    MWWA: 'data/mwwa_CTresult.csv',
     NY: 'data/ny_CTresult.csv',
+    SANB: 'data/sanb_CTresult.csv',
+    SDC: 'data/sdc_CTresult.csv',
+    SFOH: 'data/sfoh_CTresult.csv',
+    SRAA: 'data/sraa_CTresult.csv',
     // Add mappings for other areas as needed
 };
 
