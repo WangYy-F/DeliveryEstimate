@@ -102,7 +102,9 @@ function updateColumnResult() {
             if (columnIndex !== -1 && rows.length > 1) {
                 const firstDataRow = rows[1].split(',')[columnIndex];
                 const secondDataRow = rows[2].split(',')[columnIndex];
-                const result = "("+firstDataRow+", "+secondDataRow+")"
+                const roundedfirstDataRow = Math.round(firstDataRow);
+                const roundedsecondDataRow = Math.round(secondDataRow);
+                const result = "("+roundedfirstDataRow+", "+roundedsecondDataRow+")"
                 columnResultValue.textContent = result;
             } else {
                 columnResultValue.textContent = '-';
@@ -111,11 +113,30 @@ function updateColumnResult() {
         .catch(error => console.error('Error fetching CSV:', error));
 }
 
-// Add an event listener to the area select dropdown
+function handleYearChange() {
+    // Get the selected year from the dropdown
+    const selectedYear = document.getElementById('year-select').value;
+
+    if (selectedYear === '2019') {
+        areaToCsvPath = areaToCsvPath2019;
+        areaToCTPath = areaToCTPath2019;
+    } else if (selectedYear === '2021') {
+        areaToCsvPath = areaToCsvPath2021;
+        areaToCTPath = areaToCTPath2021;
+    }
+
+    // Update the result based on the selected year and settings
+    updateResult();
+    updateColumnOptions();
+    // Add any other updates you need to perform here.
+}
+
+// Add an event listener to the year select dropdown
+const yearSelect = document.getElementById('year-select');
 const areaSelect = document.getElementById('area-select');
 const columnSelect = document.getElementById('column-select');
 const columnResultValue = document.getElementById('column-result-value');
-const areaToCsvPath = {
+const areaToCsvPath2019 = {
     ARR: 'data/arr_prediction.csv',
     ASSR: 'data/assr_prediction.csv',
     DFW: 'data/dfw_prediction.csv',
@@ -129,7 +150,7 @@ const areaToCsvPath = {
     SRAA: 'data/sraa_prediction.csv',
     // Add mappings for other areas as needed
 };
-const areaToCTPath = {
+const areaToCTPath2019 = {
     ARR: 'data/arr_CTresult.csv',
     ASSR: 'data/assr_CTresult.csv',
     DFW: 'data/dfw_CTresult.csv',
@@ -143,6 +164,36 @@ const areaToCTPath = {
     SRAA: 'data/sraa_CTresult.csv',
     // Add mappings for other areas as needed
 };
+const areaToCsvPath2021 = {
+    ARR: 'data/arr_prediction_2021.csv',
+    ASSR: 'data/assr_prediction_2021.csv',
+    DFW: 'data/dfw_prediction_2021.csv',
+    HTWSL: 'data/htwsl_prediction_2021.csv',
+    LALBA: 'data/lalba_prediction_2021.csv',
+    MWWA: 'data/mwwa_prediction_2021.csv',
+    NY: 'data/ny_prediction_2021.csv',
+    SANB: 'data/sanb_prediction_2021.csv',
+    SDC: 'data/sdc_prediction_2021.csv',
+    SFOH: 'data/sfoh_prediction_2021.csv',
+    SRAA: 'data/sraa_prediction_2021.csv',
+    // Add mappings for other areas as needed
+};
+const areaToCTPath2021 = {
+    ARR: 'data/arr_CTresult_2021.csv',
+    ASSR: 'data/assr_CTresult_2021.csv',
+    DFW: 'data/dfw_CTresult_2021.csv',
+    HTWSL: 'data/htwsl_CTresult_2021.csv',
+    LALBA: 'data/lalba_CTresult_2021.csv',
+    MWWA: 'data/mwwa_CTresult_2021.csv',
+    NY: 'data/ny_CTresult_2021.csv',
+    SANB: 'data/sanb_CTresult_2021.csv',
+    SDC: 'data/sdc_CTresult_2021.csv',
+    SFOH: 'data/sfoh_CTresult_2021.csv',
+    SRAA: 'data/sraa_CTresult_2021.csv',
+    // Add mappings for other areas as needed
+};
+
+yearSelect.addEventListener('change', handleYearChange);
 
 areaSelect.addEventListener('change', updateResult); // Update the result when the area is changed
 
@@ -157,11 +208,11 @@ document.addEventListener("DOMContentLoaded", () => {
         const slider = document.getElementById(sliderId);
         slider.value = sliderValues[i - 1]; // Set the initial slider value
     }
-
+    handleYearChange();
     // Initial update of result
-    updateResult();
+    //updateResult();
 
-    updateColumnOptions();
+    //updateColumnOptions();
 
     // Initialize columnSelect with the first option
     const firstOption = columnSelect.querySelector('option');
