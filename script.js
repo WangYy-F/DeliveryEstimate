@@ -136,62 +136,24 @@ const yearSelect = document.getElementById('year-select');
 const areaSelect = document.getElementById('area-select');
 const columnSelect = document.getElementById('column-select');
 const columnResultValue = document.getElementById('column-result-value');
-const areaToCsvPath2019 = {
-    ARR: 'data/arr_prediction.csv',
-    ASSR: 'data/assr_prediction.csv',
-    DFW: 'data/dfw_prediction.csv',
-    HTWSL: 'data/htwsl_prediction.csv',
-    LALBA: 'data/lalba_prediction.csv',
-    MWWA: 'data/mwwa_prediction.csv',
-    NY: 'data/ny_prediction.csv',
-    SANB: 'data/sanb_prediction.csv',
-    SDC: 'data/sdc_prediction.csv',
-    SFOH: 'data/sfoh_prediction.csv',
-    SRAA: 'data/sraa_prediction.csv',
-    // Add mappings for other areas as needed
-};
-const areaToCTPath2019 = {
-    ARR: 'data/arr_CTresult.csv',
-    ASSR: 'data/assr_CTresult.csv',
-    DFW: 'data/dfw_CTresult.csv',
-    HTWSL: 'data/htwsl_CTresult.csv',
-    LALBA: 'data/lalba_CTresult.csv',
-    MWWA: 'data/mwwa_CTresult.csv',
-    NY: 'data/ny_CTresult.csv',
-    SANB: 'data/sanb_CTresult.csv',
-    SDC: 'data/sdc_CTresult.csv',
-    SFOH: 'data/sfoh_CTresult.csv',
-    SRAA: 'data/sraa_CTresult.csv',
-    // Add mappings for other areas as needed
-};
-const areaToCsvPath2021 = {
-    ARR: 'data/arr_prediction_2021.csv',
-    ASSR: 'data/assr_prediction_2021.csv',
-    DFW: 'data/dfw_prediction_2021.csv',
-    HTWSL: 'data/htwsl_prediction_2021.csv',
-    LALBA: 'data/lalba_prediction_2021.csv',
-    MWWA: 'data/mwwa_prediction_2021.csv',
-    NY: 'data/ny_prediction_2021.csv',
-    SANB: 'data/sanb_prediction_2021.csv',
-    SDC: 'data/sdc_prediction_2021.csv',
-    SFOH: 'data/sfoh_prediction_2021.csv',
-    SRAA: 'data/sraa_prediction_2021.csv',
-    // Add mappings for other areas as needed
-};
-const areaToCTPath2021 = {
-    ARR: 'data/arr_CTresult_2021.csv',
-    ASSR: 'data/assr_CTresult_2021.csv',
-    DFW: 'data/dfw_CTresult_2021.csv',
-    HTWSL: 'data/htwsl_CTresult_2021.csv',
-    LALBA: 'data/lalba_CTresult_2021.csv',
-    MWWA: 'data/mwwa_CTresult_2021.csv',
-    NY: 'data/ny_CTresult_2021.csv',
-    SANB: 'data/sanb_CTresult_2021.csv',
-    SDC: 'data/sdc_CTresult_2021.csv',
-    SFOH: 'data/sfoh_CTresult_2021.csv',
-    SRAA: 'data/sraa_CTresult_2021.csv',
-    // Add mappings for other areas as needed
-};
+const areaToCsvPath2019 = {};
+const areaToCTPath2019 = {};
+const areaToCsvPath2021 = {};
+const areaToCTPath2021 = {};
+
+// Add a change event listener to the area select element
+areaSelect.addEventListener("change", function () {
+    const selectedArea = areaSelect.value;
+    const selectedAreaText = areaSelect.options[areaSelect.selectedIndex].text;
+
+    // Generate file paths for 2019 and 2021 based on the selected area
+    areaToCsvPath2019[selectedArea] = `Result/${selectedAreaText}_prediction.csv`;
+    areaToCTPath2019[selectedArea] = `Result/${selectedAreaText}_CTresult.csv`;
+    areaToCsvPath2021[selectedArea] = `Result/${selectedAreaText}_prediction_2021.csv`;
+    areaToCTPath2021[selectedArea] = `Result/${selectedAreaText}_CTresult_2021.csv`;
+});
+
+// You can use these objects as needed when the area selection changes
 
 yearSelect.addEventListener('change', handleYearChange);
 
@@ -210,11 +172,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     handleYearChange();
     // Initial update of result
-    //updateResult();
-
-    //updateColumnOptions();
-
-    // Initialize columnSelect with the first option
     const firstOption = columnSelect.querySelector('option');
     if (firstOption) {
         columnSelect.value = firstOption.value;
