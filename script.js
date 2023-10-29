@@ -22,6 +22,25 @@ function updateResult() {
     // Get the selected area from the dropdown
     const selectedArea = document.getElementById('area-select').value;
 
+    //const selectedArea = areaSelect.value;
+    const selectedAreaText = areaSelect.options[areaSelect.selectedIndex].text;
+
+    // Generate file paths for 2019 and 2021 based on the selected area
+    areaToCsvPath2019[selectedArea] = `Result/${selectedAreaText}_prediction.csv`;
+    areaToCTPath2019[selectedArea] = `Result/${selectedAreaText}_CTresult.csv`;
+    areaToCsvPath2021[selectedArea] = `Result/${selectedAreaText}_prediction_2021.csv`;
+    areaToCTPath2021[selectedArea] = `Result/${selectedAreaText}_CTresult_2021.csv`;
+
+    const selectedYear = document.getElementById('year-select').value;
+
+    if (selectedYear === '2019') {
+        areaToCsvPath = areaToCsvPath2019;
+        areaToCTPath = areaToCTPath2019;
+    } else if (selectedYear === '2021') {
+        areaToCsvPath = areaToCsvPath2021;
+        areaToCTPath = areaToCTPath2021;
+    }
+
     // Define a mapping of area values to CSV file paths
     const csvFilePath = areaToCsvPath[selectedArea];
 
@@ -36,10 +55,13 @@ function updateResult() {
                 const rowValues = row.split(',');
                 const rowSliderValues = rowValues.slice(0, 6).map(val => parseInt(val)); // Extract slider values from the row
                 const resultFloat = parseFloat(rowValues[6]); // Extract the float result
+                const popresultFloat = parseFloat(rowValues[7]); // Extract the float result
 
                 if (JSON.stringify(rowSliderValues) === JSON.stringify(sliderValues)) {
                     const roundedResult = Math.round(resultFloat); // Round the float to an integer
                     document.getElementById("value").textContent = roundedResult;
+                    const poproundedResult = Math.round(popresultFloat); // Round the float to an integer
+                    document.getElementById("pop_value").textContent = poproundedResult;
                     return; // Exit the loop if a match is found
                 }
             });
@@ -140,18 +162,6 @@ const areaToCsvPath2019 = {};
 const areaToCTPath2019 = {};
 const areaToCsvPath2021 = {};
 const areaToCTPath2021 = {};
-
-// Add a change event listener to the area select element
-areaSelect.addEventListener("change", function () {
-    const selectedArea = areaSelect.value;
-    const selectedAreaText = areaSelect.options[areaSelect.selectedIndex].text;
-
-    // Generate file paths for 2019 and 2021 based on the selected area
-    areaToCsvPath2019[selectedArea] = `Result/${selectedAreaText}_prediction.csv`;
-    areaToCTPath2019[selectedArea] = `Result/${selectedAreaText}_CTresult.csv`;
-    areaToCsvPath2021[selectedArea] = `Result/${selectedAreaText}_prediction_2021.csv`;
-    areaToCTPath2021[selectedArea] = `Result/${selectedAreaText}_CTresult_2021.csv`;
-});
 
 // You can use these objects as needed when the area selection changes
 
