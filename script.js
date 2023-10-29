@@ -1,5 +1,41 @@
 // Initialize button status
 let sliderValues = [0, 0, 0, 0, 0, 0];
+let rowSelected = [true, true, true, true, true, true]; // Initialize all rows as selected
+
+// Function to handle row selection
+function handleRowSelection(rowIndex) {
+    rowSelected[rowIndex] = !rowSelected[rowIndex];
+
+    // Update the initial row value when deselected
+    if (!rowSelected[rowIndex]) {
+        sliderValues[rowIndex] = 0;
+    }
+
+    const slider = document.getElementById(`slider${rowIndex + 1}`);
+    const checkbox = document.getElementById(`row${rowIndex + 1}-select`);
+
+    // Toggle the checkbox between checked and unchecked based on the selection status
+    if (rowSelected[rowIndex]) {
+        checkbox.checked = true;
+    } else {
+        checkbox.checked = false;
+    }
+
+    // Enable or disable the slider based on the selection status
+    slider.disabled = !rowSelected[rowIndex];
+    slider.classList.toggle("disabled", !rowSelected[rowIndex]);
+    updateResult();
+}
+
+
+// Add event listeners for row selections and initialize them
+for (let i = 0; i < 6; i++) {
+    const checkbox = document.getElementById(`row${i + 1}-select`);
+    checkbox.checked = true; // Initialize the checkbox as selected
+    checkbox.addEventListener("change", () => {
+        handleRowSelection(i);
+    });
+}
 
 // Function to toggle the slider values
 function toggleSliderValue(sliderId) {
@@ -15,6 +51,16 @@ function toggleSliderValue(sliderId) {
         document.getElementById(sliderId).value = sliderValues[index];
     }
     updateResult();
+}
+
+// Add click event listeners to all buttons
+for (let i = 1; i <= 6; i++) {
+    const sliderId = `slider${i}`;
+    const slider = document.getElementById(sliderId);
+    slider.addEventListener("input", () => {
+        toggleSliderValue(sliderId);
+        updateResult(); // Update the result when a slider is changed
+    });
 }
 
 // Function to update the result based on the selected geographical area and button states
@@ -51,33 +97,51 @@ function updateResult() {
             const headers = csvRows[0].split(',');
             const data = csvRows.slice(1);
 
+            // Initialize variables to calculate weighted average and sum
+            let weightedSum = 0;
+            let sumOfWeights = 0;
+
             data.forEach(row => {
                 const rowValues = row.split(',');
-                const rowSliderValues = rowValues.slice(0, 6).map(val => parseInt(val)); // Extract slider values from the row
-                const resultFloat = parseFloat(rowValues[6]); // Extract the float result
-                const popresultFloat = parseFloat(rowValues[7]); // Extract the float result
-
-                if (JSON.stringify(rowSliderValues) === JSON.stringify(sliderValues)) {
-                    const roundedResult = Math.round(resultFloat); // Round the float to an integer
-                    document.getElementById("value").textContent = roundedResult;
-                    const poproundedResult = Math.round(popresultFloat); // Round the float to an integer
-                    document.getElementById("pop_value").textContent = poproundedResult;
-                    return; // Exit the loop if a match is found
+                // Check if the row is not empty (e.g., it has at least 8 columns, as per your usage)
+                if (rowValues.length >= 8) {
+                    const rowSliderValues = rowValues.slice(0, 6).map(val => parseInt(val)); // Extract slider values from the row
+                    const resultFloat = parseFloat(rowValues[6]); // Extract the float result
+                    const popresultFloat = parseFloat(rowValues[7]); // Extract the float result
+            
+                    // Check if the row matches the selected slider values
+                    const matchesSelectedAttributes = rowSliderValues.every((value, index) => {
+                        return rowSelected[index] ? value === sliderValues[index] : true;
+                    });
+            
+                    if (matchesSelectedAttributes) {
+                        // Update weighted sum and sum of weights
+                        weightedSum += resultFloat * popresultFloat;
+                        sumOfWeights += popresultFloat;
+                    }
                 }
-            });
+            });            
+
+            if (sumOfWeights > 0) {
+                // Calculate the weighted average
+                const weightedAverage = weightedSum / sumOfWeights;
+
+                // Round and display the result
+                const roundedResult = Math.round(weightedAverage);
+                document.getElementById("value").textContent = roundedResult;
+
+                // Calculate and display the sum of population results
+                const roundedPopResult = Math.round(sumOfWeights);
+                document.getElementById("pop_value").textContent = roundedPopResult;
+            } else {
+                // No matching rows
+                document.getElementById("value").textContent = '-';
+                document.getElementById("pop_value").textContent = '-';
+            }
         })
         .catch(error => console.error('Error fetching CSV:', error));
 }
 
-// Add click event listeners to all buttons
-for (let i = 1; i <= 6; i++) {
-    const sliderId = `slider${i}`;
-    const slider = document.getElementById(sliderId);
-    slider.addEventListener("input", () => {
-        toggleSliderValue(sliderId);
-        updateResult(); // Update the result when a slider is changed
-    });
-}
 
 function updateColumnOptions() {
     const selectedArea = areaSelect.value;
@@ -124,12 +188,15 @@ function updateColumnResult() {
             if (columnIndex !== -1 && rows.length > 1) {
                 const firstDataRow = rows[1].split(',')[columnIndex];
                 const secondDataRow = rows[2].split(',')[columnIndex];
+                const thirdDataRow = rows[3].split(',')[columnIndex];
                 const roundedfirstDataRow = Math.round(firstDataRow);
                 const roundedsecondDataRow = Math.round(secondDataRow);
                 const result = "("+roundedfirstDataRow+", "+roundedsecondDataRow+")"
                 columnResultValue.textContent = result;
+                columnResultPopValue.textContent = thirdDataRow;
             } else {
                 columnResultValue.textContent = '-';
+                columnResultPopValue.textContent = '-';
             }
         })
         .catch(error => console.error('Error fetching CSV:', error));
@@ -158,6 +225,7 @@ const yearSelect = document.getElementById('year-select');
 const areaSelect = document.getElementById('area-select');
 const columnSelect = document.getElementById('column-select');
 const columnResultValue = document.getElementById('column-result-value');
+const columnResultPopValue = document.getElementById('column-result-value-pop');
 const areaToCsvPath2019 = {};
 const areaToCTPath2019 = {};
 const areaToCsvPath2021 = {};

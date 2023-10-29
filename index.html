@@ -75,36 +75,42 @@
         <div class="rows">
             <!-- Row 1 -->
             <div class="row">
+                <input type="checkbox" id="row1-select"> <label for="row1-select"></label>
                 <label for="slider1">age<65</label>
                 <input id="slider1" type="range" class="slider" min="0" max="1" value="0" step="1">
                 <label for="slider1">age>=65</label>
             </div>
             <!-- Row 2 -->
             <div class="row">
+                <input type="checkbox" id="row2-select"> <label for="row2-select"></label>
                 <label for="slider2">Not Female</label>
                 <input id="slider2" type="range" class="slider" min="0" max="1" value="0" step="1">
                 <label for="slider2">Female</label>
             </div>
             <!-- Row 3 -->
             <div class="row">
+                <input type="checkbox" id="row3-select"> <label for="row3-select"></label>
                 <label for="slider3">No College Degree</label>
                 <input id="slider3" type="range" class="slider" min="0" max="1" value="0" step="1">
                 <label for="slider3">College Degree or Higher</label>
             </div>
             <!-- Row 4 -->
             <div class="row">
+                <input type="checkbox" id="row4-select"> <label for="row4-select"></label>
                 <label for="slider4">Household No Car(s)</label>
                 <input id="slider4" type="range" class="slider" min="0" max="1" value="0" step="1">
                 <label for="slider4">Household Has Car(s)</label>
             </div>
             <!-- Row 5 -->
             <div class="row">
+                <input type="checkbox" id="row5-select"> <label for="row5-select"></label>
                 <label for="slider5">Household No Child(ren)</label>
                 <input id="slider5" type="range" class="slider" min="0" max="1" value="0" step="1">
                 <label for="slider5">Household Has Child(ren)</label>
             </div>
             <!-- Row 6 -->
             <div class="row">
+                <input type="checkbox" id="row6-select"> <label for="row6-select"></label>
                 <label for="slider6">Household Income: (<75,000 / 75,000-150,000 / >150,000)</label>
                 <input id="slider6" type="range" class="slider" min="0" max="2" value="0">
             </div>
@@ -118,6 +124,9 @@
     </div>
     <div class="column-result">
         <p id="column-value">Total Delivery (Interval Estimate): <span id="column-result-value">-</span></p>
+    </div>
+    <div class="column-result-pop">
+        <p id="column-value-pop">Total Population: <span id="column-result-value-pop">-</span></p>
     </div>
     <script src="script.js"></script>
 </body>
